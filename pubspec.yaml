@@ -1,7 +1,7 @@
 name: negocio_app
-description: App para gestionar un pequeno o mediano negocio
+description: App de gestion para PYMES
 publish_to: 'none'
-version: 1.0.0+1
+version: 2.0.0+1
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
