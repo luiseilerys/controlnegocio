@@ -32,10 +32,16 @@ jobs:
           cp /tmp/main.dart.bak lib/main.dart
 
       - name: Install dependencies
-        run: flutter pub get
+        run: flutter get
 
       - name: Build APK release
         run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: negocio-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
