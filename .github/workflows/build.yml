@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Java
@@ -21,27 +21,31 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
+          flutter-version: '3.22.0' # Usamos una versión reciente y estable
           channel: 'stable'
           cache: true
 
+      - name: Verify Flutter installation
+        run: flutter doctor -v
+
+      - name: Clean project and get dependencies
+        run: |
+          # Limpia cualquier artefacto previo
+          flutter clean
+          # Obtiene las dependencias de forma limpia
+          flutter pub get
+
       - name: Generate Android platform files
         run: |
+          # Guardamos el main.dart
           cp lib/main.dart /tmp/main.dart.bak
+          # Creamos el proyecto de Android con el nombre correcto
           flutter create --project-name negocio_app --org com.minegocio --platforms=android .
+          # Restauramos el main.dart
           cp /tmp/main.dart.bak lib/main.dart
 
-      - name: Install dependencies
-        run: flutter get
-
-      - name: Build APK release
+      - name: Build APK (Release)
         run: flutter build apk --release
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: negocio-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
