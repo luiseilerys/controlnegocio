@@ -55,7 +55,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: negocio-apk
+          name: negocio-apk-${{ github.run_id }}-${{ github.run_attempt }}
           path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Upload APK
